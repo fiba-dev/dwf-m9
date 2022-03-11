@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import { User } from "lib/models/user";
-import method from "micro-method-router";
+import methods from "micro-method-router";
 import { createPreference } from "lib/mercadopago";
 import { Order } from "lib/models/order";
 const products = {
@@ -74,7 +74,7 @@ async function postHandler(
 	res.send({ url: pref.body.init_point });
 }
 
-const handler = method({
+const handler = methods({
 	post: postHandler,
 	async get() {},
 });
