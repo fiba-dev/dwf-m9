@@ -14,6 +14,7 @@ function getOffsetAndLimit(req: NextApiRequest, maxLimit, maxOffset) {
 	const limit = queryLimit <= maxLimit ? queryLimit : 100;
 	return { offset, limit };
 }
+
 // export (req:NextApiRequest, res:NextApiResponse) {
 //     const lista= getLista()
 //     // console.log(lista);
