@@ -1,6 +1,6 @@
 import { User } from "lib/models/user";
 import { Auth } from "lib/models/auth";
-import sendCodeEmail from "lib/sendgrid";
+import { sendCodeEmail } from "lib/sendgrid";
 import { timeStamp } from "console";
 import addMinutes from "date-fns/addMinutes";
 import gen from "random-seed";
