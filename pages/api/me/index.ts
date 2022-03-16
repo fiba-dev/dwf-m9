@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import method from "micro-method-router";
-import { findOrCreateAuth, sendCode } from "lib/controller/auth";
 import { editUser } from "lib/controller/users";
-import parseBearerToken from "parse-bearer-token";
-import { decode } from "lib/jwt";
 import { User } from "lib/models/user";
-import { setDefaultResultOrder } from "dns";
 
 async function getUser(req: NextApiRequest, res: NextApiResponse, token) {
 	console.log("TOKEN QUE LLEGA", token);

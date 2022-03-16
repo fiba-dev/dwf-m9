@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { findOrCreateAuth, sendCode, expireCode } from "lib/controller/auth";
 import { generate } from "lib/jwt";
-import jwt from "jsonwebtoken";
-import sendgrid from "lib/sendgrid";
+import { jwt } from "jsonwebtoken";
+
 import { Auth } from "lib/models/auth";
 import { isAfter } from "date-fns";
 export default async function (req: NextApiRequest, res: NextApiResponse) {

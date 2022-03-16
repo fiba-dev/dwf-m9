@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
-import { getOffsetAndLimit } from "lib/request";
-import { airtableBase } from "lib/airtable";
-import { productIndex } from "lib/algolia";
 import { getProduct } from "../../../lib/controller/products";
 
 async function getProducts(
