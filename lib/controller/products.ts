@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
+import { productIndex } from "lib/algolia";
 function getLista() {
 	const arr = Array.from(Array(1000).keys());
 	const test = arr.map((valor) => {
@@ -14,7 +15,13 @@ function getOffsetAndLimit(req: NextApiRequest, maxLimit, maxOffset) {
 	const limit = queryLimit <= maxLimit ? queryLimit : 100;
 	return { offset, limit };
 }
-
+export async function getProduct(objectId) {
+	try {
+		return await productIndex.findObject((hit) => hit.objectID == objectId, {});
+	} catch (error) {
+		return false;
+	}
+}
 // export (req:NextApiRequest, res:NextApiResponse) {
 //     const lista= getLista()
 //     // console.log(lista);
