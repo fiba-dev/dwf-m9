@@ -1,5 +1,5 @@
 import { object } from "yup";
-import { User } from "../models/user";
+import { User } from "lib/models/user";
 
 export async function editUser(body, user: User) {
 	const usuario = user.data;

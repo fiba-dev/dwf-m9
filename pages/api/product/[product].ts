@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
-import { getProduct } from "../../../lib/controller/products";
+import { getProduct } from "lib/controller/products";
 
 async function getProducts(
 	req: NextApiRequest,
