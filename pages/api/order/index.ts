@@ -75,8 +75,7 @@ async function postHandler(
 			pending: "https://apx.school/pending-payments",
 		},
 
-		notification_url:
-			"https://webhook.site/7800fcd9-0ffb-4672-a69e-d5f8d0c90c63",
+		notification_url: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
 		binary_mode: false,
 		differential_pricing: {},
 	});
