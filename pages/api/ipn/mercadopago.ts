@@ -7,10 +7,9 @@ import { getMerchantOrder } from "lib/mercadopago";
 import { id } from "date-fns/locale";
 import { Order } from "lib/models/order";
 
-async function changeStatusOrder(
+export default async function changeStatusOrder(
 	req: NextApiRequest,
-	res: NextApiResponse,
-	userBody
+	res: NextApiResponse
 ) {
 	const { id, topic } = req.query;
 	if (topic == "merchant_order") {
@@ -26,7 +25,3 @@ async function changeStatusOrder(
 	}
 	res.send("ok");
 }
-const handler = methods({
-	get: changeStatusOrder,
-});
-export default authMiddleware(handler);
