@@ -1,6 +1,7 @@
 import { object } from "yup";
 import { User } from "lib/models/user";
-
+import { firestore } from "lib/firestore";
+const collection = firestore.collection("users");
 export async function editUser(body, user: User) {
 	const usuario = user.data;
 
@@ -28,4 +29,19 @@ export async function editUser(body, user: User) {
 	// 	});
 	// 	return newAuth;
 	// }
+}
+export async function getEmailUser(userid) {
+	console.log("collection", collection);
+	console.log("soy userid", userid);
+
+	const results = collection.doc(userid);
+	const data = await (await results.get()).data();
+	console.log("Soy results", results);
+
+	if (results) {
+		console.log("resultsfieldsprotp", data);
+
+		const email = data.email;
+		return email;
+	} else return null;
 }

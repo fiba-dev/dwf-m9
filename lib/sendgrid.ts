@@ -26,9 +26,9 @@ async function sendCodeEmail(email: string, code: number, expires) {
 	return true;
 }
 
-async function sendOrderStatusEmail() {
+async function sendOrderStatusEmail(email) {
 	const msg = {
-		to: "fibarrola06@gmail.com", // Change to your recipient
+		to: email, // Change to your recipient
 		from: "fibarrola06@gmail.com", // Change to your verified sender
 		subject: "PAGO REALIZADO",
 		text: "PAGO REALIZADO",
