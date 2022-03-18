@@ -15,7 +15,6 @@ export default async function changeStatusOrder(
 	const { id, topic } = req.query;
 	if (topic == "merchant_order") {
 		const results = await getMerchantOrder(id);
-		console.log("RESULTS", results);
 
 		if (results.order_status == "paid") {
 			const orderId = results.external_reference;
@@ -25,8 +24,6 @@ export default async function changeStatusOrder(
 			const email = await getEmailUser(userId);
 			await sendOrderStatusEmail(email);
 			myOrder.data.status = "closed";
-
-			console.log("MY ORDER", myOrder);
 
 			await myOrder.push();
 		}

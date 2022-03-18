@@ -31,16 +31,10 @@ export async function editUser(body, user: User) {
 	// }
 }
 export async function getEmailUser(userid) {
-	console.log("collection", collection);
-	console.log("soy userid", userid);
-
 	const results = collection.doc(userid);
 	const data = await (await results.get()).data();
-	console.log("Soy results", results);
 
 	if (results) {
-		console.log("resultsfieldsprotp", data);
-
 		const email = data.email;
 		return email;
 	} else return null;
