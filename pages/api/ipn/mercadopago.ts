@@ -13,23 +13,30 @@ export default async function changeStatusOrder(
 	res: NextApiResponse
 ) {
 	const { id, topic } = req.query;
-	if (topic == "merchant_order") {
-		const results = await getMerchantOrder(id);
+	try {
+		if (topic == "merchant_order") {
+			const results = await getMerchantOrder(id);
 
-		if (results.order_status == "paid") {
-			const orderId = results.external_reference;
-			const myOrder = new Order(orderId);
-			await myOrder.pull();
+			if (results.order_status == "paid") {
+				const orderId = results.external_reference;
+				console.log("soy orderid", orderId);
 
-			const userId = myOrder.data.userId;
+				const myOrder = new Order(orderId);
+				await myOrder.pull();
+				console.log("soy myorder", myOrder);
 
-			const email = await getEmailUser(userId).then();
+				const userId = myOrder.data.userId;
 
-			const sent = await sendOrderStatusEmail(email);
-			myOrder.data.status = "closed";
+				const email = await getEmailUser(userId);
 
-			await myOrder.push();
+				const sent = await sendOrderStatusEmail(email);
+				myOrder.data.status = "closed";
+
+				await myOrder.push();
+			}
 		}
+	} catch (error) {
+		res.send(error);
 	}
 	res.send("ok");
 }
