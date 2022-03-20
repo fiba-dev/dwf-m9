@@ -28,11 +28,10 @@ export default async function changeStatusOrder(
 				const userId = myOrder.data.userId;
 
 				const email = await getEmailUser(userId);
-
-				const sent = await sendOrderStatusEmail(email);
 				myOrder.data.status = "closed";
 
 				await myOrder.push();
+				await sendOrderStatusEmail(email);
 			}
 		}
 	} catch (error) {
