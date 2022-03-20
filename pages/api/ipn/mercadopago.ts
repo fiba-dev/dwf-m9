@@ -20,9 +20,12 @@ export default async function changeStatusOrder(
 			const orderId = results.external_reference;
 			const myOrder = new Order(orderId);
 			await myOrder.pull();
+
 			const userId = myOrder.data.userId;
-			const email = await getEmailUser(userId);
-			await sendOrderStatusEmail(email);
+
+			const email = await getEmailUser(userId).then();
+
+			const sent = await sendOrderStatusEmail(email);
 			myOrder.data.status = "closed";
 
 			await myOrder.push();
