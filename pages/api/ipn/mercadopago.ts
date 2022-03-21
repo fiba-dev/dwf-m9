@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
-import { sendCode } from "lib/controller/auth";
+import { sendCode } from "controller/auth";
 import { sendOrderStatusEmail } from "lib/sendgrid";
-import { getMerchantOrder } from "lib/mercadopago";
+import { getMerchantOrder } from "mercadopago";
 import { id } from "date-fns/locale";
-import { Order } from "lib/models/order";
-import { getEmailUser } from "lib/controller/users";
+import { Order } from "models/order";
+import { User } from "models/user";
 
 export default async function changeStatusOrder(
 	req: NextApiRequest,
@@ -19,17 +19,11 @@ export default async function changeStatusOrder(
 
 			if (results.order_status == "paid") {
 				const orderId = results.external_reference;
-				console.log("soy orderid", orderId);
-
 				const myOrder = new Order(orderId);
 				await myOrder.pull();
-				console.log("soy myorder", myOrder);
-
 				const userId = myOrder.data.userId;
-
-				const email = await getEmailUser(userId);
+				const email = await User.getEmailUser(userId);
 				myOrder.data.status = "closed";
-
 				await myOrder.push();
 				await sendOrderStatusEmail(email);
 			}

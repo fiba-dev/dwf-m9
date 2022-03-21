@@ -1,21 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import method from "micro-method-router";
-import { editUser } from "lib/controller/users";
-import { User } from "lib/models/user";
+import { editUser, getUserFromId } from "controller/users";
 
 async function getUser(req: NextApiRequest, res: NextApiResponse, token) {
-	console.log("TOKEN QUE LLEGA", token);
+	const user = await getUserFromId(token.userId);
 
-	const user = new User(token.userId);
-	await user.pull();
 	res.send(user.data);
 }
 async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
-	console.log("TOKEN QUE LLEGA soy SETUSER", token);
-	console.log("SOY REQU:BODY", req.body);
-	const user = new User(token.userId);
-	await user.pull();
+	const user = await getUserFromId(token.userId);
+
 	if (req.body.nombre && req.body.dni && req.body.direccion) {
 		await editUser(req.body, user);
 	} else {
@@ -24,7 +19,6 @@ async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 		});
 	}
 
-	// res.send(user.data);
 	res.send(true);
 }
 const handler = method({

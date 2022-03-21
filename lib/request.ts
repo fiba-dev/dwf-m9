@@ -8,8 +8,6 @@ export function getOffsetAndLimit(
 	const queryOffset = parseInt((req.query.offset as string) || "0");
 	const queryLimit = parseInt((req.query.limit as string) || "0");
 	let limit = 10;
-	console.log("querylimit", queryLimit);
-
 	if (queryLimit > 0 && queryLimit < maxLimit) {
 		limit = queryLimit;
 	} else if (queryLimit > maxLimit) {

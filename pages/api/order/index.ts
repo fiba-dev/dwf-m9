@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
-import { User } from "lib/models/user";
+import { User } from "models/user";
 import methods from "micro-method-router";
 import { createPreference } from "lib/mercadopago";
-import { Order } from "lib/models/order";
-import { getProduct } from "lib/controller/products";
+import { Order } from "models/order";
+import { getProduct } from "controller/products";
+import { getUserFromId } from "controller/users";
 
 import { getMerchantOrder } from "lib/mercadopago";
 // const products = {
@@ -23,15 +24,14 @@ async function postHandler(
 	res: NextApiResponse,
 	userBody
 ) {
-	console.log("soy products,", req.query.productId);
 	const { productId } = req.query;
 	const product = await getProduct(productId);
 	if (product == false) {
 		return res.status(404).send({ message: "Product not found" });
 	}
 	const objectProduct = product.object;
-	const user = new User(userBody.userId);
-	await user.pull();
+	const user = await getUserFromId(userBody.userId);
+
 	const order = await Order.createNewOrder({
 		aditionalInfo: req.body,
 		productId,

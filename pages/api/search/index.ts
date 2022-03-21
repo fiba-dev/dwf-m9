@@ -5,13 +5,10 @@ import { productIndex } from "lib/algolia";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { offset, limit } = getOffsetAndLimit(req);
-	console.log("este es req.query", req.query, offset, limit);
-
 	const resultado = await productIndex.search(req.query.q as string, {
 		hitsPerPage: limit,
 		offset: offset,
 	});
-
 	res.send({
 		results: resultado.hits,
 		pagination: {
