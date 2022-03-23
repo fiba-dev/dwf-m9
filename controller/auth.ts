@@ -3,12 +3,18 @@ import { Auth } from "models/auth";
 import { sendCodeEmail } from "lib/sendgrid";
 import gen from "random-seed";
 import { addSeconds, subSeconds } from "date-fns";
-let seed = "CLAVESECRETALALA";
-let rand4 = gen.create(seed);
+import rn from "random-number";
+
+var gen = rn.generator({
+	min: 0,
+	max: 100000,
+	integer: true,
+});
+
 export async function sendCode(email) {
 	try {
 		const auth = await findOrCreateAuth(email);
-		const code = rand4.intBetween(1000, 99999);
+		const code = gen();
 		const now = new Date();
 		const twentyMinutes = addSeconds(now, 1200);
 		auth.data.code = code;
