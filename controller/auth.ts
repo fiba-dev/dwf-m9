@@ -21,11 +21,12 @@ export async function sendCode(email) {
 		const twentyMinutes = addSeconds(now, 1200);
 		auth.data.code = code;
 		auth.data.expires = twentyMinutes;
-		await auth.push().then(() => {
-			sendCodeEmail(email, code, twentyMinutes);
-		});
-
-		console.log("EMAIL ENVIADO A: " + email + " CON CODIGO:" + code);
+		await auth.push();
+		const emailEnviado = await sendCodeEmail(email, code, twentyMinutes);
+		console.log(
+			"EMAIL ENVIADO A: " + email + " CON CODIGO:" + code,
+			emailEnviado
+		);
 		console.log("soy code2", code);
 
 		return true;

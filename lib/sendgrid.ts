@@ -17,13 +17,14 @@ async function sendCodeEmail(email: string, code: number, expires) {
 	};
 	sgMail
 		.send(msg)
-		.then(() => {
+		.then((res) => {
 			console.log("Email sent");
+			return true;
 		})
 		.catch((error) => {
 			console.error(error);
+			return false;
 		});
-	return true;
 }
 
 async function sendOrderStatusEmail(email) {
