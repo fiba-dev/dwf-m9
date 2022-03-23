@@ -15,7 +15,8 @@
 			"--experimental-specifier-resolution=node"
 		],
 		"environmentVariables": {
-			"TESTING": "true"
+			"TESTING": "true",
+			"JWT_SECRET": "asdaskldnasldkn"
 		},
 		"extensions": {
 			"ts": "module"
@@ -41,6 +42,7 @@
 		"random-seed": "^0.3.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"sinon": "^13.0.1",
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {
