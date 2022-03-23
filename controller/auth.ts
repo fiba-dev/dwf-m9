@@ -20,7 +20,7 @@ export async function sendCode(email) {
 		auth.data.code = code;
 		auth.data.expires = twentyMinutes;
 		await auth.push();
-		await sendCodeEmail(auth.data.email, code, twentyMinutes);
+		await sendCodeEmail(email, code, twentyMinutes);
 		console.log("EMAIL ENVIADO A: " + email + "CON CODIGO:" + code);
 
 		return true;
