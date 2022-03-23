@@ -2,7 +2,7 @@ import sgMail from "@sendgrid/mail";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 async function sendCodeEmail(email: string, code: number, expires) {
 	const msg = {
-		to: "fibarrola06@gmail.com", // Change to your recipient
+		to: email, // Change to your recipient
 		from: "fibarrola06@gmail.com", // Change to your verified sender
 		subject: "Sending with SendGrid is Fun",
 		text: "and easy to do anywhere, even with Node.js",
