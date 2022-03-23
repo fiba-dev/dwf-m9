@@ -19,11 +19,11 @@ async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 	const user = await getUserFromId(token.userId);
 
 	try {
-		await userDatos.validate(req.query);
+		await userDatos.validate(req.body);
 	} catch (e) {
 		return res.status(422).send({ field: "body", message: "error" });
 	}
-	await editUser(req.query, user);
+	const userEdited = await editUser(req.body, user);
 
 	res.send(true);
 }

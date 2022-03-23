@@ -8,7 +8,6 @@ export function decode(token) {
 	try {
 		return jwt.verify(token, process.env.JWT_SECRET);
 	} catch (e) {
-		console.log("ERRORTOKEN", e);
 		return null;
 	}
 }

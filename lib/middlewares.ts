@@ -4,8 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { decode } from "lib/jwt";
 
 const parseBearerToken = (req): string | null => {
-	console.log("soy req de parsebearertoken", req);
-
 	const auth = req.headers ? req.headers.authorization || null : null;
 	if (!auth) {
 		return null;
