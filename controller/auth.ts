@@ -6,17 +6,21 @@ import { addSeconds, subSeconds } from "date-fns";
 let seed = "CLAVESECRETALALA";
 let rand4 = gen.create(seed);
 export async function sendCode(email) {
-	const auth = await findOrCreateAuth(email);
-	const code = rand4.intBetween(1000, 99999);
-	const now = new Date();
-	const twentyMinutes = addSeconds(now, 1200);
-	auth.data.code = code;
-	auth.data.expires = twentyMinutes;
-	await auth.push();
-	await sendCodeEmail(auth.data.email, code, twentyMinutes);
-	console.log("EMAIL ENVIADO A: " + email + "CON CODIGO:" + code);
+	try {
+		const auth = await findOrCreateAuth(email);
+		const code = rand4.intBetween(1000, 99999);
+		const now = new Date();
+		const twentyMinutes = addSeconds(now, 1200);
+		auth.data.code = code;
+		auth.data.expires = twentyMinutes;
+		await auth.push();
+		await sendCodeEmail(auth.data.email, code, twentyMinutes);
+		console.log("EMAIL ENVIADO A: " + email + "CON CODIGO:" + code);
 
-	return true;
+		return true;
+	} catch (error) {
+		return error;
+	}
 }
 export async function expireCode(auth) {
 	console.log("soy datadeauth", auth.data.expires.toDate());
