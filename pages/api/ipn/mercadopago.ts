@@ -3,7 +3,7 @@ import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
 import { sendCode } from "controller/auth";
 import { sendOrderStatusEmail } from "lib/sendgrid";
-import { getMerchantOrder } from "mercadopago";
+import { getMerchantOrder } from "lib/mercadopago";
 import { id } from "date-fns/locale";
 import { Order } from "models/order";
 import { User } from "models/user";
@@ -13,9 +13,14 @@ export default async function changeStatusOrder(
 	res: NextApiResponse
 ) {
 	const { id, topic } = req.query;
+	console.log("TOPICYID", topic, id);
+
 	try {
 		if (topic == "merchant_order") {
+			console.log("entre al id");
+
 			const results = await getMerchantOrder(id);
+			console.log("results", results);
 
 			if (results.order_status == "paid") {
 				const orderId = results.external_reference;
