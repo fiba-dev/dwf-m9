@@ -8,9 +8,6 @@ import { User } from "models/user";
 let userDatos = yup
 	.object()
 	.shape({
-		nombre: yup.string(),
-		dni: yup.string(),
-		email: yup.string().email(),
 		direccion: yup.string(),
 	})
 	.noUnknown(true)

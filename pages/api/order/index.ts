@@ -7,18 +7,6 @@ import { Order } from "models/order";
 import { getProduct } from "controller/products";
 import { getUserFromId } from "controller/users";
 
-import { getMerchantOrder } from "lib/mercadopago";
-// const products = {
-// 	1234: {
-// 		title: "Auto",
-// 		description: "Dummy description",
-// 		picture_url: "http://www.myapp.com/myimage.jpg",
-// 		category_id: "cat123",
-// 		quantity: 1,
-// 		currency_id: "ARS",
-// 		unit_price: 100,
-// 	},
-// };
 async function postHandler(
 	req: NextApiRequest,
 	res: NextApiResponse,
@@ -71,8 +59,8 @@ async function postHandler(
 
 		back_urls: {
 			failure: "",
-			success: "https://apx.school",
-			pending: "https://apx.school/pending-payments",
+			success: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
+			pending: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
 		},
 
 		notification_url: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
