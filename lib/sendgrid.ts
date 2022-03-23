@@ -15,7 +15,7 @@ async function sendCodeEmail(email: string, code: number, expires) {
 			expires +
 			" </strong>",
 	};
-	sgMail
+	await sgMail
 		.send(msg)
 		.then((res) => {
 			console.log("Email sent");

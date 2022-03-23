@@ -11,7 +11,7 @@ var gen = rn.generator({
 	integer: true,
 });
 
-export async function sendCode(email) {
+async function sendCode(email) {
 	try {
 		const auth = await findOrCreateAuth(email);
 		const code = gen();
@@ -22,11 +22,8 @@ export async function sendCode(email) {
 		auth.data.code = code;
 		auth.data.expires = twentyMinutes;
 		await auth.push();
-		const emailEnviado = await sendCodeEmail(email, code, twentyMinutes);
-		console.log(
-			"EMAIL ENVIADO A: " + email + " CON CODIGO:" + code,
-			emailEnviado
-		);
+		await sendCodeEmail(email, code, twentyMinutes);
+		console.log("EMAIL ENVIADO A: " + email + " CON CODIGO:" + code);
 		console.log("soy code2", code);
 
 		return true;
@@ -34,7 +31,7 @@ export async function sendCode(email) {
 		return error;
 	}
 }
-export async function expireCode(auth) {
+async function expireCode(auth) {
 	console.log("soy datadeauth", auth.data.expires.toDate());
 
 	const twentyMinutes = subSeconds(auth.data.expires.toDate(), 1200);
@@ -42,7 +39,7 @@ export async function expireCode(auth) {
 	await auth.push();
 }
 
-export async function findOrCreateAuth(email: string) {
+async function findOrCreateAuth(email: string) {
 	const cleanEmail = email.trim().toLowerCase();
 	const auth = await Auth.findByEmail(cleanEmail);
 	if (auth) {
@@ -64,3 +61,4 @@ export async function findOrCreateAuth(email: string) {
 		return newAuth;
 	}
 }
+export { expireCode, sendCode, findOrCreateAuth };
