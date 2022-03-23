@@ -15,6 +15,8 @@ export async function sendCode(email) {
 	try {
 		const auth = await findOrCreateAuth(email);
 		const code = gen();
+		console.log("soy code", code);
+
 		const now = new Date();
 		const twentyMinutes = addSeconds(now, 1200);
 		auth.data.code = code;
@@ -22,6 +24,7 @@ export async function sendCode(email) {
 		await auth.push();
 		await sendCodeEmail(email, code, twentyMinutes);
 		console.log("EMAIL ENVIADO A: " + email + "CON CODIGO:" + code);
+		console.log("soy code2", code);
 
 		return true;
 	} catch (error) {
