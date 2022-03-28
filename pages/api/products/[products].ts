@@ -8,7 +8,7 @@ async function getProducts(
 	res: NextApiResponse,
 	userBody
 ) {
-	const productId = req.query.product;
+	const productId = req.query.products;
 	const resultado = await getProduct(productId);
 	if (resultado == false)
 		return res.status(404).send({ message: "Product not found" });
