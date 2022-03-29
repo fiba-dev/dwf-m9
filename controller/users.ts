@@ -15,3 +15,11 @@ export async function getUserFromId(userId) {
 	await user.pull();
 	return user;
 }
+export async function getEmailUser(userId) {
+	const results = new User(userId);
+	await results.pull();
+	if (results) {
+		const email = results.data.email;
+		return email;
+	} else return null;
+}

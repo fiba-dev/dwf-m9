@@ -7,6 +7,8 @@ import { getMerchantOrder } from "lib/mercadopago";
 import { id } from "date-fns/locale";
 import { Order } from "models/order";
 import { User } from "models/user";
+import { getOrderFromId } from "controller/order";
+import { getEmailUser } from "controller/users";
 
 export default async function changeStatusOrder(
 	req: NextApiRequest,
@@ -20,10 +22,9 @@ export default async function changeStatusOrder(
 
 			if (results.order_status == "paid") {
 				const orderId = results.external_reference;
-				const myOrder = new Order(orderId);
-				await myOrder.pull();
+				const myOrder = await getOrderFromId(orderId);
 				const userId = myOrder.data.userId;
-				const email = await User.getEmailUser(userId);
+				const email = await getEmailUser(userId);
 				myOrder.data.status = "closed";
 				await myOrder.push();
 				await sendOrderStatusEmail(email);

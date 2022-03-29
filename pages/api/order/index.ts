@@ -17,7 +17,7 @@ async function postHandler(
 	}
 	const objectProduct = product.object;
 
-	const order = await crearOrden(req.body, productId, userBody.userId);
+	const order = await crearOrden(req.body, userBody.userId, productId);
 
 	const pref = await createPreference(objectProduct, order, req.body.quantity);
 
