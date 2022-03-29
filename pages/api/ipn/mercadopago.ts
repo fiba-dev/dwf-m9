@@ -13,14 +13,10 @@ export default async function changeStatusOrder(
 	res: NextApiResponse
 ) {
 	const { id, topic } = req.query;
-	console.log("TOPICYID", topic, id);
 
 	try {
 		if (topic == "merchant_order") {
-			console.log("entre al id");
-
 			const results = await getMerchantOrder(id);
-			console.log("results", results);
 
 			if (results.order_status == "paid") {
 				const orderId = results.external_reference;

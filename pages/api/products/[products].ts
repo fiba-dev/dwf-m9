@@ -3,7 +3,7 @@ import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
 import { getProduct } from "controller/products";
 
-async function getProducts(
+export default async function getProducts(
 	req: NextApiRequest,
 	res: NextApiResponse,
 	userBody
@@ -17,4 +17,3 @@ async function getProducts(
 const handler = methods({
 	get: getProducts,
 });
-export default authMiddleware(handler);

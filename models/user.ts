@@ -22,7 +22,7 @@ export class User {
 		return newUser;
 	}
 	static async getEmailUser(userid) {
-		const results = collection.doc(userid);
+		const results = await collection.doc(userid);
 		const data = await (await results.get()).data();
 
 		if (results) {

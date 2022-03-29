@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import methods from "micro-method-router";
-import { getMerchantOrder } from "lib/mercadopago";
+import { getOrderFromId } from "controller/order";
 
 async function getOrder(req: NextApiRequest, res: NextApiResponse, userBody) {
-	const order = await getMerchantOrder(req.query.order);
+	const order = await getOrderFromId(req.query.order);
 	res.send(order);
 }
 const handler = methods({
