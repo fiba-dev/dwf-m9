@@ -45,7 +45,7 @@ export async function createPreference(product, order, quantity) {
 
 		back_urls: {
 			failure: "",
-			success: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
+			success: "",
 			pending: "",
 		},
 
