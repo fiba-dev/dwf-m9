@@ -2,13 +2,23 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import method from "micro-method-router";
 import { editUser, getUserFromId } from "controller/users";
-
+import initMiddleware from "lib/init-middleware";
+import Cors from "cors";
+const cors = initMiddleware(
+	// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+	Cors({
+		// Only allow requests with GET, POST and OPTIONS
+		methods: ["GET", "POST", "OPTIONS"],
+	})
+);
 async function getUser(req: NextApiRequest, res: NextApiResponse, token) {
+	await cors(req, res);
 	const user = await getUserFromId(token.userId);
 
 	res.send(user.data);
 }
 async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
+	await cors(req, res);
 	const user = await getUserFromId(token.userId);
 
 	if (req.body.nombre && req.body.dni && req.body.direccion) {
