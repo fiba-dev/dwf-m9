@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
+import initMiddleware from "./init-middleware";
 // import parseBearerToken from "parse-bearer-token";
 import { decode } from "lib/jwt";
 
