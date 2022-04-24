@@ -12,11 +12,13 @@ const cors = initMiddleware(
 	})
 );
 async function getUser(req: NextApiRequest, res: NextApiResponse, token) {
+	await cors(req, res);
 	const user = await getUserFromId(token.userId);
 
 	res.send(user.data);
 }
 async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
+	await cors(req, res);
 	const user = await getUserFromId(token.userId);
 
 	if (req.body.nombre && req.body.dni && req.body.direccion) {
@@ -29,11 +31,10 @@ async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 
 	res.send(true);
 }
+
 const handlerAuth = method({
-	get: cors,
-	getUser,
-	patch: cors,
-	setUser,
+	get: getUser,
+	patch: setUser,
 });
 
 export default authMiddleware(handlerAuth);
