@@ -29,12 +29,12 @@ async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 
 	res.send(true);
 }
-const handler = method({
+const handlerAuth = method({
 	get: getUser,
 	patch: setUser,
 });
-export default function enableCors(req: any, res: any) {
-	cors(req, res).then((res) => {
-		authMiddleware(handler);
-	});
+export default async function handler(req, res) {
+	await cors(req, res);
+
+	authMiddleware(handlerAuth);
 }
