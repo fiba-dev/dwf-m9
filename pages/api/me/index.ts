@@ -34,7 +34,7 @@ const handlerAuth = method({
 	get: getUser,
 	patch: setUser,
 });
-export default function enableCors(req, res) {
-	cors(req, res);
-	authMiddleware(handlerAuth);
+export default async function handler(req, res) {
+	await cors(req, res);
+	res.json({ message: "Hello Everyone!" });
 }
