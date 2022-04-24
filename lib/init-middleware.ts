@@ -21,7 +21,5 @@ const cors = initMiddleware(
 		methods: ["GET", "POST", "OPTIONS"],
 	})
 );
-export default async function middlewareCors(callback) {
-	await cors;
-	return callback();
-}
+
+export { cors, initMiddleware };
