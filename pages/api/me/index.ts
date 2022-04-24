@@ -36,5 +36,5 @@ const handlerAuth = method({
 });
 export default async function handler(req, res) {
 	await cors(req, res);
-	authMiddleware(handlerAuth);
+	res.send(authMiddleware(handlerAuth));
 }
