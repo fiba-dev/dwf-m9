@@ -30,11 +30,10 @@ async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 	res.send(true);
 }
 const handlerAuth = method({
-	get: getUser,
-	patch: setUser,
+	get: cors,
+	getUser,
+	patch: cors,
+	setUser,
 });
-export default async function handler(req, res) {
-	await cors(req, res);
 
-	authMiddleware(handlerAuth);
-}
+export default authMiddleware(handlerAuth);
