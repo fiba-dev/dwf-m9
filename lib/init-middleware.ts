@@ -23,7 +23,5 @@ const cors = initMiddleware(
 );
 export default async function middlewareCors(callback) {
 	await cors;
-	return function (req: NextApiRequest, res: NextApiResponse) {
-		callback(req, res);
-	};
+	return callback();
 }
