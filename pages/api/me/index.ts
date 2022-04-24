@@ -33,7 +33,10 @@ const handler = method({
 	get: getUser,
 	patch: setUser,
 });
-export default async function corsMiddleware() {
-	await cors;
+export default async function enableCors(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	await cors(req, res);
 	authMiddleware(handler);
 }
