@@ -2,7 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { expireCode } from "controller/auth";
 import { generate } from "lib/jwt";
 import { Auth } from "models/auth";
+import Cors from "cors";
 import * as yup from "yup";
+const cors = Cors({
+	methods: ["GET", "HEAD"],
+});
+
 let userData = yup
 	.object()
 	.shape({
@@ -11,7 +16,28 @@ let userData = yup
 	})
 	.noUnknown(true)
 	.strict();
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+function runMiddleware(req, res, fn) {
+	return new Promise((resolve, reject) => {
+		fn(req, res, (result) => {
+			if (result instanceof Error) {
+				return reject(result);
+			}
+
+			return resolve(result);
+		});
+	});
+}
+function authMiddlewareCors(callback) {
+	const data = {};
+	return async function (req: NextApiRequest, res: NextApiResponse) {
+		const respuesta = await runMiddleware(req, res, cors);
+		callback(req, res, data);
+	};
+}
+export default authMiddlewareCors(async function (
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
 	try {
 		await userData.validate(req.body);
 		const auth = await Auth.findByEmailAndCode(req.body.email, req.body.code);
@@ -34,4 +60,4 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 	} catch (error) {
 		return error;
 	}
-}
+});
