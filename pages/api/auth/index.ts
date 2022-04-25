@@ -3,7 +3,7 @@ import { sendCode } from "controller/auth";
 import * as yup from "yup";
 import Cors from "cors";
 const cors = Cors({
-	methods: ["GET", "HEAD"],
+	methods: ["GET", "POST", "HEAD"],
 });
 
 // Helper method to wait for a middleware to execute before continuing

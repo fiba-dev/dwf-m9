@@ -5,7 +5,7 @@ import { Auth } from "models/auth";
 import Cors from "cors";
 import * as yup from "yup";
 const cors = Cors({
-	methods: ["GET", "HEAD"],
+	methods: ["GET", "POST", "HEAD"],
 });
 
 let userData = yup
