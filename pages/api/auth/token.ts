@@ -2,11 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { expireCode } from "controller/auth";
 import { generate } from "lib/jwt";
 import { Auth } from "models/auth";
-import Cors from "cors";
+import { authMiddlewareCors } from "lib/init-middleware";
 import * as yup from "yup";
-const cors = Cors({
-	methods: ["GET", "POST", "HEAD"],
-});
 
 let userData = yup
 	.object()
@@ -16,24 +13,7 @@ let userData = yup
 	})
 	.noUnknown(true)
 	.strict();
-function runMiddleware(req, res, fn) {
-	return new Promise((resolve, reject) => {
-		fn(req, res, (result) => {
-			if (result instanceof Error) {
-				return reject(result);
-			}
 
-			return resolve(result);
-		});
-	});
-}
-function authMiddlewareCors(callback) {
-	const data = {};
-	return async function (req: NextApiRequest, res: NextApiResponse) {
-		const respuesta = await runMiddleware(req, res, cors);
-		callback(req, res, data);
-	};
-}
 export default authMiddlewareCors(async function (
 	req: NextApiRequest,
 	res: NextApiResponse

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getOffsetAndLimit } from "lib/request";
 import { productIndex } from "lib/algolia";
-
-export default async function handler(
+import { authMiddlewareCors } from "lib/init-middleware";
+export default authMiddlewareCors(async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
@@ -21,4 +21,4 @@ export default async function handler(
 			total: resultado.nbHits,
 		},
 	});
-}
+});
