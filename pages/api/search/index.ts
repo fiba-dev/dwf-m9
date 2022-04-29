@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getOffsetAndLimit } from "lib/request";
 import { productIndex } from "lib/algolia";
 import { authMiddlewareCors } from "lib/init-middleware";
-export default authMiddlewareCors(async function handler(
+export default authMiddlewareCors(async function (
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
