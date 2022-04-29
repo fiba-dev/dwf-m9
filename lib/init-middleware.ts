@@ -1,25 +1,28 @@
-import Cors from "cors";
 import { NextApiRequest, NextApiResponse } from "next";
+import Cors from "cors";
+const cors = Cors({
+	methods: ["GET", "POST", "HEAD"],
+});
 
-function initMiddleware(middleware) {
-	return (req, res) =>
-		new Promise((resolve, reject) => {
-			middleware(req, res, (result) => {
-				res.setHeader("Access-Control-Allow-Credentials", true);
-				res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-				if (result instanceof Error) {
-					return reject(result);
-				}
-				return resolve(result);
-			});
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(req, res, fn) {
+	return new Promise((resolve, reject) => {
+		fn(req, res, (result) => {
+			if (result instanceof Error) {
+				return reject(result);
+			}
+
+			return resolve(result);
 		});
+	});
 }
-const cors = initMiddleware(
-	// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-	Cors({
-		// Only allow requests with GET, POST and OPTIONS
-		methods: ["GET", "POST", "OPTIONS"],
-	})
-);
+function authMiddlewareCors(callback) {
+	const data = {};
+	return async function (req: NextApiRequest, res: NextApiResponse) {
+		const respuesta = await runMiddleware(req, res, cors);
+		callback(req, res, data);
+	};
+}
 
-export { cors, initMiddleware };
+export { authMiddlewareCors };
