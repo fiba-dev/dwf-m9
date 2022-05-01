@@ -36,7 +36,7 @@ export default authMiddlewareCors(async function (
 
 		await expireCode(auth);
 		const token = generate({ userId: auth.data.userId });
-		res.send(token);
+		res.send({ token: token });
 	} catch (error) {
 		return error;
 	}
