@@ -12,7 +12,7 @@ async function getUser(req: NextApiRequest, res: NextApiResponse, token) {
 async function setUser(req: NextApiRequest, res: NextApiResponse, token) {
 	const user = await getUserFromId(token.userId);
 
-	if (req.body.nombre && req.body.dni && req.body.direccion) {
+	if (req.body.nombre && req.body.telefono && req.body.direccion) {
 		await editUser(req.body, user);
 	} else {
 		return res.status(400).send({
