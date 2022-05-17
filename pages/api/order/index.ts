@@ -4,6 +4,7 @@ import methods from "micro-method-router";
 import { createPreference } from "lib/mercadopago";
 import { getProduct } from "controller/products";
 import { crearOrden } from "controller/order";
+import { authMiddlewareCors } from "lib/init-middleware";
 
 async function postHandler(
 	req: NextApiRequest,
@@ -27,4 +28,4 @@ async function postHandler(
 const handler = methods({
 	post: postHandler,
 });
-export default authMiddleware(handler);
+export default authMiddlewareCors(authMiddleware(handler));
