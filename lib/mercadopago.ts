@@ -44,9 +44,9 @@ export async function createPreference(product, order, quantity) {
 		additional_info: "Esta es informacion adicional",
 
 		back_urls: {
-			failure: "",
-			success: "",
-			pending: "",
+			failure: "https://dwf-m10-one.vercel.app/thanks",
+			success: "https://dwf-m10-one.vercel.app/thanks",
+			pending: "https://dwf-m10-one.vercel.app/thanks",
 		},
 
 		notification_url: "https://dwf-m9.vercel.app/api/ipn/mercadopago",
