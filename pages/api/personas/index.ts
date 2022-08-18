@@ -11,7 +11,7 @@ async function getPersonas(req: NextApiRequest, res: NextApiResponse) {
 
 	res.send(personas);
 }
-async function setPersona(req: NextApiRequest, res: NextApiResponse, token) {
+async function setPersonas(req: NextApiRequest, res: NextApiResponse, token) {
 	if (
 		req.body.nombre &&
 		req.body.telefono &&
@@ -31,6 +31,6 @@ async function setPersona(req: NextApiRequest, res: NextApiResponse, token) {
 
 const handlerAuth = method({
 	get: getPersonas,
-	patch: setPersona,
+	patch: setPersonas,
 });
 export default authMiddlewareCors(handlerAuth);
