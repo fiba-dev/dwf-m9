@@ -9,8 +9,8 @@ export async function createPersona(params: any) {
 		codigo: params.codigo,
 	});
 }
-export async function obtenerPersonas() {
-	let res = await Persona.obtenerPersonas();
+export async function obtenerPersonas(offset, limit) {
+	let res = await Persona.obtenerPersonas(offset, limit);
 	console.log("SOY RES", res);
 	return res;
 }

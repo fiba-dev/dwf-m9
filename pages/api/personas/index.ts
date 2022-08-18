@@ -4,9 +4,11 @@ import method from "micro-method-router";
 import { editUser, getUserFromId } from "controller/users";
 import { createPersona, obtenerPersonas } from "controller/personas";
 import { authMiddlewareCors } from "lib/init-middleware";
+import { getOffsetAndLimit } from "lib/request";
 
 async function getPersonas(req: NextApiRequest, res: NextApiResponse) {
-	const personas = await obtenerPersonas();
+	const { offset, limit } = getOffsetAndLimit(req);
+	const personas = await obtenerPersonas(offset, limit);
 
 	res.send(personas);
 }
