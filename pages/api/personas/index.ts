@@ -7,11 +7,12 @@ import { authMiddlewareCors } from "lib/init-middleware";
 
 async function getPersonas(req: NextApiRequest, res: NextApiResponse) {
 	const personas = await obtenerPersonas();
-	console.log("SOY GET PERSONAS", personas);
 
 	res.send(personas);
 }
 async function setPersonas(req: NextApiRequest, res: NextApiResponse, token) {
+	console.log("SOY PERSONA", req.body);
+
 	if (
 		req.body.nombre &&
 		req.body.telefono &&
