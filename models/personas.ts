@@ -31,12 +31,10 @@ export class Persona {
 			return email;
 		} else return null;
 	}
-	static async obtenerPersonas(offset, limit) {
-		let snapshot = await collection
-			.orderBy("nombre")
-			.limit(limit)
-			.offset(offset)
-			.get();
-		return snapshot.docs.map((doc) => doc.data());
+	static async obtenerPersonas() {
+		let snapshot = await collection.get();
+		let data = snapshot.docs.map((doc) => doc.data());
+
+		return data;
 	}
 }

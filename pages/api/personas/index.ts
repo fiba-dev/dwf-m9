@@ -2,13 +2,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "lib/middlewares";
 import method from "micro-method-router";
 import { editUser, getUserFromId } from "controller/users";
-import { createPersona, obtenerPersonas } from "controller/personas";
+import { buscarPersonas, createPersona } from "controller/personas";
 import { authMiddlewareCors } from "lib/init-middleware";
 import { getOffsetAndLimit } from "lib/request";
 
 async function getPersonas(req: NextApiRequest, res: NextApiResponse) {
-	const { offset, limit } = getOffsetAndLimit(req);
-	const personas = await obtenerPersonas(offset, limit);
+	// const { offset, limit } = getOffsetAndLimit(req);
+	console.log("ENTRE");
+	console.log("Soy req", req.query);
+
+	const personas = await buscarPersonas(
+		req.query.q,
+		req.query.filter,
+		req.query.page
+	);
 
 	res.send(personas);
 }
