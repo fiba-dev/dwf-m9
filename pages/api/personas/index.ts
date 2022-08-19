@@ -23,20 +23,27 @@ async function setPersonas(req: NextApiRequest, res: NextApiResponse, token) {
 	console.log("SOY PERSONA", req.body);
 
 	if (
-		req.body.nombre &&
-		req.body.telefono &&
-		req.body.codigo &&
-		req.body.nit &&
-		req.body["razón social"]
+		!(
+			req.body.nombre &&
+			req.body.telefono &&
+			req.body.codigo &&
+			req.body.nit &&
+			req.body["razón social"]
+		)
 	) {
-		await createPersona(req.body);
-	} else {
 		return res.status(400).send({
 			message: "FALTAN DATOS",
 		});
 	}
-
-	res.send(true);
+	let respuesta = await createPersona(req.body);
+	console.log("SOY RESPUESTA", respuesta);
+	if (respuesta == false) {
+		res.status(400).send({
+			message: "TIENE EL MISMO NIT",
+		});
+	} else {
+		res.send(true);
+	}
 }
 
 const handlerAuth = method({
